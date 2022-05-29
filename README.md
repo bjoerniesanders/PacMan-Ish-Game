@@ -1,16 +1,16 @@
 # PacMan-Ish-Game
-This is a PacMan-Ish Game in Javascript
+This is a PacMan-Ish Game in Javascript<br />
 
-Todo:
-Generate Map ✅
-Create a Player ✅
-Add movement ✅
-Add Collision Detaction
-Add Pallets
-Add Score
-Create Ghosts
-Add Powerup
-Create Win-Condition
-Layout a full Level
-Add Chomp Animation to Player
+Todo:<br />
+Generate Map ✅ <br />
+Create a Player ✅ <br />
+Add movement ✅ <br />
+Add Collision Detaction<br />
+Add Pallets<br />
+Add Score<br />
+Create Ghosts<br />
+Add Powerup<br />
+Create Win-Condition<br />
+Layout a full Level<br />
+Add Chomp Animation to Player<br />
 
