@@ -5,7 +5,7 @@ Todo:<br />
 Generate Map ✅ <br />
 Create a Player ✅ <br />
 Add movement ✅ <br />
-Add Collision Detaction<br />
+Add Collision Detection ✅<br />
 Add Pallets<br />
 Add Score<br />
 Create Ghosts<br />
