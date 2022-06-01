@@ -68,12 +68,13 @@ const keys = {
 let lastKey = '';
 
 const map = [
-    ['-', '-', '-', '-', '-', '-'],
-    ['-', ' ', ' ', ' ', ' ', '-'],
-    ['-', ' ', '-', '-', ' ', '-'],
-    ['-', ' ', '-', '-', ' ', '-'],
-    ['-', ' ', ' ', ' ', ' ', '-'],
-    ['-', '-', '-', '-', '-', '-'],
+    ['-', '-', '-', '-', '-', '-', '-'],
+    ['-', ' ', ' ', ' ', ' ', ' ', '-'],
+    ['-', ' ', '-', ' ', '-', ' ', '-'],
+    ['-', ' ', ' ', ' ', ' ', ' ', '-'],
+    ['-', ' ', '-', ' ', '-', ' ', '-'],
+    ['-', ' ', ' ', ' ', ' ', ' ', '-'],
+    ['-', '-', '-', '-', '-', '-', '-'],
 ];
 
 map.forEach((row, i) => {
@@ -90,28 +91,80 @@ map.forEach((row, i) => {
         }
     })
 });
+function pacmanCollidewithBorder({pacman, border}) {
+    return (
+        pacman.position.y - pacman.radius + pacman.velocity.y <= border.position.y + border.height &&
+            pacman.position.x + pacman.radius + pacman.velocity.x >= border.position.x &&
+            pacman.position.y + pacman.radius + pacman.velocity.y >= border.position.y &&
+            pacman.position.x - pacman.radius + pacman.velocity.x <= border.position.x + border.width
+    )
+}
+
+function CollideCheck(x, y) {
+    for (let i = 0; i < boundaries.length; i++) {
+        const boundary = boundaries[i];
+        if (pacmanCollidewithBorder({
+            pacman: {
+                ...player,
+                velocity: {
+                    x: x,
+                    y: y
+                }
+            },
+            border: boundary
+        })
+        ) {
+            if (y != 0) {
+                player.velocity.y = 0;
+            } else if (x != 0) {
+                player.velocity.x = 0;
+            }
+            break;
+            
+            
+        } else {
+            if (y != 0) {
+                player.velocity.y = y;
+            } else if (x != 0) {
+                player.velocity.x = x;
+            }
+        }
+    }
+}
+
 function animate() {
     requestAnimationFrame(animate);
     c.clearRect(0, 0, canvas.width, canvas.height);
+    if (keys.w.pressed && lastKey === 'w') {
+        CollideCheck(0, -5);
+    };
+    if (keys.s.pressed && lastKey === 's') {
+        CollideCheck(0, 5);
+    };
+    if (keys.a.pressed && lastKey === 'a') {
+        CollideCheck(-5, 0);
+    };
+    if (keys.d.pressed && lastKey === 'd') {
+       CollideCheck(5, 0);
+    };
+
     boundaries.forEach((boundary) => {
-    boundary.draw()
+        boundary.draw()
+        if (
+            pacmanCollidewithBorder({
+                pacman: player,
+                border: boundary
+            })
+        ) 
+        {
+            player.velocity.x = 0;
+            player.velocity.y = 0;
+        }
 });
 
     player.update();
-    player.velocity.x = 0;
-    player.velocity.y = 0;
-    if (keys.w.pressed && lastKey === 'w') {
-        player.velocity.y = -5;
-    };
-    if (keys.s.pressed && lastKey === 's') {
-        player.velocity.y = 5;
-    };
-    if (keys.a.pressed && lastKey === 'a') {
-        player.velocity.x = -5;
-    };
-    if (keys.d.pressed && lastKey === 'd') {
-        player.velocity.x = 5;
-    };
+ 
+   
 };
 
 animate();
